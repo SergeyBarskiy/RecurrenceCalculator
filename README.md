@@ -52,3 +52,6 @@ public void Should_Generate_Weekly_Recurrences_Without_End_Date()
     Assert.AreEqual(new DateTime(2014, 3, 11).Add(startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
 }
 </code></pre>
+
+You can also use NuGet to install the package: https://www.nuget.org/packages/RecurrenceCalculator/
+Just type Install-Package RecurrenceCalculator in package manager console window.
