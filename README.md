@@ -1,3 +1,3 @@
 Recurrence Calculator
 ====================
-Tools writtent for .NET that performace Outlook style recurrences.
+Tools written for .NET that performace Outlook style recurrence calculations.
