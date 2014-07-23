@@ -6,7 +6,7 @@ namespace RecurrenceCalculator
 
     /// <summary>
     /// Class Calculator.
-    /// Performs occurrence caluatlations based on recurrence pattern
+    /// Performs occurrence calculations based on recurrence pattern
     /// </summary>
     public class Calculator
     {
@@ -14,7 +14,7 @@ namespace RecurrenceCalculator
         /// Calculates the occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         /// <exception cref="System.ArgumentException">Occurs when recurrence patter is invalid</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Occurs when type of recurrence is invalid</exception>
         public IEnumerable<DateTime> CalculateOccurrences(IRecurrence recurrence)
@@ -49,7 +49,7 @@ namespace RecurrenceCalculator
         /// Gets the daily recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetDailyRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
@@ -57,7 +57,7 @@ namespace RecurrenceCalculator
             DateTime date = recurrence.StartDate.Date;
             while (!IsDayOfTheWeekMatched(date, recurrence))
             {
-                date = date.Add(recurrence.StartDate.TimeOfDay);
+                date = date.AddDays(1);
             }
 
             bool keepLooping = true;
@@ -84,7 +84,7 @@ namespace RecurrenceCalculator
         /// Gets the weekly recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetWeeklyRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
@@ -135,7 +135,7 @@ namespace RecurrenceCalculator
         /// Gets the monthly recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetMonthlyRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
@@ -171,7 +171,7 @@ namespace RecurrenceCalculator
         /// Gets the month NTH recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetMonthNthRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
@@ -206,7 +206,7 @@ namespace RecurrenceCalculator
         /// Gets the yearly recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetYearlyRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
@@ -247,7 +247,7 @@ namespace RecurrenceCalculator
         /// Gets the year NTH recurrence occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
-        /// <returns>The dates for occurences.</returns>
+        /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetYearNthRecurrenceOccurrences(IRecurrence recurrence)
         {
             var returnValue = new List<DateTime>();
