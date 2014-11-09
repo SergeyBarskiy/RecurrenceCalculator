@@ -52,32 +52,21 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetDailyRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
-
             DateTime date = recurrence.StartDate.Date;
             while (!IsDayOfTheWeekMatched(date, recurrence))
             {
                 date = date.AddDays(1);
             }
 
-            bool keepLooping = true;
-
-            do
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter++, date, recurrence))
             {
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
-                {
-                    keepLooping = false;
-                }
-                else
-                {
-                    returnValue.Add(date.Add(recurrence.StartDate.TimeOfDay));
-                    date = IsWeekdaySet(recurrence) ? (date.AddDays((date.DayOfWeek == DayOfWeek.Friday) ? 3 : 1)) : date.AddDays(recurrence.Interval);
+                yield return date.Add(recurrence.StartDate.TimeOfDay);
 
-                }
+                date = IsWeekdaySet(recurrence)
+                    ? (date.AddDays((date.DayOfWeek == DayOfWeek.Friday) ? 3 : 1))
+                    : date.AddDays(recurrence.Interval);
             }
-            while (keepLooping);
-
-            return returnValue;
         }
 
         /// <summary>
@@ -87,8 +76,6 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetWeeklyRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
-
             DateTime date = recurrence.StartDate.Date;
             // find sunday before - start of first week
             while (date.DayOfWeek != DayOfWeek.Sunday)
@@ -96,39 +83,27 @@ namespace RecurrenceCalculator
                 date = date.AddDays(-1);
             }
 
-            bool keepLooping = true;
-
-            do
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter, date, recurrence))
             {
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
+                // run through this week
+                for (int day = 0; day < 7; ++day)
                 {
-                    keepLooping = false;
-                }
-                else
-                {
-                    // run through this week
-                    for (int day = 0; day < 7; day++)
+                    var tempDate = date.AddDays(day);
+                    if (GeneratedEnoughOccurrences(occurenceCounter, tempDate, recurrence))
                     {
-
-                        var tempDate = date.AddDays(day);
-                        if (GeneratedEnoughOccurrences(returnValue.Count, tempDate, recurrence))
-                        {
-                            keepLooping = false;
-                            break;
-                        }
-
-                        if (tempDate >= recurrence.StartDate.Date && IsDayOfTheWeekMatched(tempDate, recurrence))
-                        {
-                            returnValue.Add(tempDate.Add(recurrence.StartDate.TimeOfDay));
-                        }
+                        break;
                     }
-                    // advance to the next week based on number of weeks to skip 
-                    date = date.AddDays(7 * recurrence.Interval);
-                }
-            }
-            while (keepLooping);
 
-            return returnValue;
+                    if (tempDate >= recurrence.StartDate.Date && IsDayOfTheWeekMatched(tempDate, recurrence))
+                    {
+                        yield return tempDate.Add(recurrence.StartDate.TimeOfDay);
+                        ++occurenceCounter;
+                    }
+                }
+                // advance to the next week based on number of weeks to skip 
+                date = date.AddDays(7 * recurrence.Interval);
+            }
         }
 
         /// <summary>
@@ -138,32 +113,25 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetMonthlyRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
             DateTime date = recurrence.StartDate.Date;
-            bool keepLooping = true;
             if (date.Day > recurrence.DayOfMonth)
             {
                 date = date.AddMonths(recurrence.Interval).AddDays(-1 * (date.Day - 1));
             }
-            do
+
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter++, date, recurrence))
             {
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
+                if (date.Day < recurrence.DayOfMonth)
                 {
-                    keepLooping = false;
+                    date = date.AddDays(((recurrence.DayOfMonth > DateTime.DaysInMonth(date.Year, date.Month))
+                         ? DateTime.DaysInMonth(date.Year, date.Month)
+                         : recurrence.DayOfMonth) - date.Day);
                 }
-                else
-                {
-                    if (date.Day < recurrence.DayOfMonth)
-                        date = date.AddDays(((recurrence.DayOfMonth > DateTime.DaysInMonth(date.Year, date.Month)) ? DateTime.DaysInMonth(date.Year, date.Month) : recurrence.DayOfMonth) - date.Day);
 
-
-                    returnValue.Add(date.Add(recurrence.StartDate.TimeOfDay));
-                    date = date.AddMonths(recurrence.Interval);
-                }
+                yield return date.Add(recurrence.StartDate.TimeOfDay);
+                date = date.AddMonths(recurrence.Interval);
             }
-            while (keepLooping);
-
-            return returnValue;
         }
 
 
@@ -174,33 +142,20 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetMonthNthRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
             var date = GetMonthNthDate(recurrence, new DateTime(recurrence.StartDate.Year, recurrence.StartDate.Month, 1));
             if (date < recurrence.StartDate.Date)
             {
                 date = GetMonthNthDate(recurrence,
                     new DateTime(recurrence.StartDate.Year, recurrence.StartDate.Month, 1).AddMonths(recurrence.Interval));
             }
-            bool keepLooping = true;
 
-            do
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter++, date, recurrence))
             {
-
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
-                {
-                    keepLooping = false;
-                }
-                else
-                {
-                    returnValue.Add(date.Add(recurrence.StartDate.TimeOfDay));
-                    date = GetMonthNthDate(recurrence, new DateTime(date.Year, date.Month, 1).AddMonths(recurrence.Interval));
-                }
+                yield return date.Add(recurrence.StartDate.TimeOfDay);
+                date = GetMonthNthDate(recurrence, new DateTime(date.Year, date.Month, 1).AddMonths(recurrence.Interval));
             }
-            while (keepLooping);
-
-            return returnValue;
         }
-
 
         /// <summary>
         /// Gets the yearly recurrence occurrences.
@@ -209,7 +164,6 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetYearlyRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
             var lastDayOfMonth = DateTime.DaysInMonth(recurrence.StartDate.Year, recurrence.MonthOfYear);
             var date = new DateTime(recurrence.StartDate.Year, recurrence.MonthOfYear,
                 lastDayOfMonth > recurrence.DayOfMonth ? recurrence.DayOfMonth : lastDayOfMonth);
@@ -219,26 +173,16 @@ namespace RecurrenceCalculator
                 date = new DateTime(recurrence.StartDate.Year + recurrence.Interval, recurrence.MonthOfYear,
                     lastDayOfMonth > recurrence.DayOfMonth ? recurrence.DayOfMonth : lastDayOfMonth);
             }
-            bool keepLooping = true;
 
-
-            do
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter++, date, recurrence))
             {
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
-                {
-                    keepLooping = false;
-                }
-                else
-                {
-                    returnValue.Add(date.Add(recurrence.StartDate.TimeOfDay));
-                    lastDayOfMonth = DateTime.DaysInMonth(date.Year + recurrence.Interval, recurrence.MonthOfYear);
-                    date = new DateTime(date.Year + recurrence.Interval, recurrence.MonthOfYear,
-                        lastDayOfMonth > recurrence.DayOfMonth ? recurrence.DayOfMonth : lastDayOfMonth);
-                }
-            }
-            while (keepLooping);
+                yield return date.Add(recurrence.StartDate.TimeOfDay);
 
-            return returnValue;
+                lastDayOfMonth = DateTime.DaysInMonth(date.Year + recurrence.Interval, recurrence.MonthOfYear);
+                date = new DateTime(date.Year + recurrence.Interval, recurrence.MonthOfYear,
+                    lastDayOfMonth > recurrence.DayOfMonth ? recurrence.DayOfMonth : lastDayOfMonth);
+            }
         }
 
 
@@ -250,30 +194,18 @@ namespace RecurrenceCalculator
         /// <returns>The dates for occurrences.</returns>
         private IEnumerable<DateTime> GetYearNthRecurrenceOccurrences(IRecurrence recurrence)
         {
-            var returnValue = new List<DateTime>();
             var date = GetMonthNthDate(recurrence, new DateTime(recurrence.StartDate.Year, recurrence.MonthOfYear, 1));
             if (date < recurrence.StartDate.Date)
             {
                 date = GetMonthNthDate(recurrence, new DateTime(recurrence.StartDate.Year + recurrence.Interval, recurrence.MonthOfYear, 1));
             }
-            bool keepLooping = true;
 
-            do
+            int occurenceCounter = 0;
+            while (!GeneratedEnoughOccurrences(occurenceCounter++, date, recurrence))
             {
-
-                if (GeneratedEnoughOccurrences(returnValue.Count, date, recurrence))
-                {
-                    keepLooping = false;
-                }
-                else
-                {
-                    returnValue.Add(date.Add(recurrence.StartDate.TimeOfDay));
-                    date = GetMonthNthDate(recurrence, new DateTime(date.Year + recurrence.Interval, recurrence.MonthOfYear, 1));
-                }
+                yield return date.Add(recurrence.StartDate.TimeOfDay);
+                date = GetMonthNthDate(recurrence, new DateTime(date.Year + recurrence.Interval, recurrence.MonthOfYear, 1));
             }
-            while (keepLooping);
-
-            return returnValue;
         }
 
         #region Helper Methods

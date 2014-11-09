@@ -220,7 +220,7 @@ namespace RecurrenceCalculator.Tests
         {
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.Weekly,
+                RecurrenceType = RecurrenceType.Weekly,
                 Interval = 2,
                 Sunday = false,
                 Monday = false,
@@ -238,7 +238,7 @@ namespace RecurrenceCalculator.Tests
         {
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.Monthly,
+                RecurrenceType = RecurrenceType.Monthly,
                 Interval = 3,
                 DayOfMonth = 31,
                 Sunday = false,
@@ -257,7 +257,7 @@ namespace RecurrenceCalculator.Tests
         {
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.MonthNth,
+                RecurrenceType = RecurrenceType.MonthNth,
                 Interval = 2,
                 Instance = 3,
                 Sunday = false,
@@ -276,7 +276,7 @@ namespace RecurrenceCalculator.Tests
         {
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.Yearly,
+                RecurrenceType = RecurrenceType.Yearly,
                 Interval = 3,
                 DayOfMonth = 31,
                 MonthOfYear = 2,
@@ -296,7 +296,7 @@ namespace RecurrenceCalculator.Tests
         {
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.YearNth,
+                RecurrenceType = RecurrenceType.YearNth,
                 Interval = 3,
                 Instance = 3,
                 MonthOfYear = 2,
@@ -326,7 +326,7 @@ namespace RecurrenceCalculator.Tests
 
             return new AppointmentRecurrence
             {
-                RecurrenceTypeId = (int)RecurrenceType.Daily,
+                RecurrenceType = RecurrenceType.Daily,
                 Interval = 2,
                 Sunday = true,
                 Monday = true,
