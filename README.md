@@ -25,7 +25,7 @@ private AppointmentRecurrence CreateWeeklyRecurrence()
 {
     return new AppointmentRecurrence
     {
-        RecurrenceTypeId = (int)RecurrenceType.Weekly,
+        RecurrenceTypeId = RecurrenceType.Weekly,
         Interval = 2,
         Sunday = false,
         Monday = false,
