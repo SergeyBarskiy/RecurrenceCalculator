@@ -8,24 +8,24 @@ namespace RecurrenceCalculator.Tests
     [TestClass]
     public class RecurrenceTests
     {
-        private Calculator calendarUtility;
-        private readonly DateTime startDate = new DateTime(2014, 1, 31, 16, 0, 0);
+        private Calculator _calendarUtility;
+        private readonly DateTime _startDate = new DateTime(2014, 1, 31, 16, 0, 0);
 
         [TestInitialize]
         public void Setup()
         {
-            calendarUtility = new Calculator();
+            _calendarUtility = new Calculator();
         }
 
         [TestMethod]
         public void Should_Generate_Daily_Recurrences_Without_End_Date()
         {
             var recurrence = CreateDailyRecurrence();
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(10, occurrences.Count, "Should create 10 occurrences");
             for (int i = 0; i < occurrences.Count - 1; i++)
             {
-                Assert.AreEqual(startDate.AddDays(i * recurrence.Interval), occurrences[i], "Should have correct date");
+                Assert.AreEqual(_startDate.AddDays(i * recurrence.Interval), occurrences[i], "Should have correct date");
             }
         }
 
@@ -35,11 +35,11 @@ namespace RecurrenceCalculator.Tests
             var recurrence = CreateDailyRecurrence();
             recurrence.Occurrences = 0;
             recurrence.EndDate = new DateTime(2014, 2, 19);
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(10, occurrences.Count, "Should create 10 occurrences");
             for (int i = 0; i < occurrences.Count - 1; i++)
             {
-                Assert.AreEqual(startDate.AddDays(i * recurrence.Interval), occurrences[i], "Should have correct date");
+                Assert.AreEqual(_startDate.AddDays(i * recurrence.Interval), occurrences[i], "Should have correct date");
             }
         }
 
@@ -47,11 +47,11 @@ namespace RecurrenceCalculator.Tests
         public void Should_Generate_Daily_Weekday_Recurrences_Without_End_Date()
         {
             var recurrence = CreateDailyWeekdayRecurrence();
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 10 occurrences");
-            Assert.AreEqual(new DateTime(2014, 1, 31).Add(startDate.TimeOfDay), occurrences[0], "First date should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 3).Add(startDate.TimeOfDay), occurrences[1], "Second date should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 4).Add(startDate.TimeOfDay), occurrences[2], "Third date should be correct");
+            Assert.AreEqual(new DateTime(2014, 1, 31).Add(_startDate.TimeOfDay), occurrences[0], "First date should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 3).Add(_startDate.TimeOfDay), occurrences[1], "Second date should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 4).Add(_startDate.TimeOfDay), occurrences[2], "Third date should be correct");
         }
 
         [TestMethod]
@@ -60,28 +60,28 @@ namespace RecurrenceCalculator.Tests
             var recurrence = CreateDailyWeekdayRecurrence();
             recurrence.Occurrences = 0;
             recurrence.EndDate = new DateTime(2014, 2, 10);
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(7, occurrences.Count, "Should create 7 occurrences");
-            Assert.AreEqual(new DateTime(2014, 1, 31).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 3).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 4).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 5).Add(startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 6).Add(startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 7).Add(startDate.TimeOfDay), occurrences[5], "Date 6 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 10).Add(startDate.TimeOfDay), occurrences[6], "Date 7 should be correct");
+            Assert.AreEqual(new DateTime(2014, 1, 31).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 3).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 4).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 5).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 6).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 7).Add(_startDate.TimeOfDay), occurrences[5], "Date 6 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 10).Add(_startDate.TimeOfDay), occurrences[6], "Date 7 should be correct");
         }
 
         [TestMethod]
         public void Should_Generate_Weekly_Recurrences_Without_End_Date()
         {
             var recurrence = CreateWeeklyRecurrence();
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
-            Assert.AreEqual(new DateTime(2014, 2, 11).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 13).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 25).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 27).Add(startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
-            Assert.AreEqual(new DateTime(2014, 3, 11).Add(startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 11).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 13).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 25).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 27).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 11).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
         }
 
         [TestMethod]
@@ -90,13 +90,13 @@ namespace RecurrenceCalculator.Tests
             var recurrence = CreateWeeklyRecurrence();
             recurrence.Occurrences = 0;
             recurrence.EndDate = new DateTime(2014, 3, 11);
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
-            Assert.AreEqual(new DateTime(2014, 2, 11).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 13).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 25).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
-            Assert.AreEqual(new DateTime(2014, 2, 27).Add(startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
-            Assert.AreEqual(new DateTime(2014, 3, 11).Add(startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 11).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 13).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 25).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 27).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 11).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
         }
 
 
@@ -104,11 +104,11 @@ namespace RecurrenceCalculator.Tests
         public void Should_Generate_Monthly_Recurrences_Without_End_Date()
         {
             var recurrence = CreateMonthlyRecurrence();
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 1, 31).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 4, 30).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 7, 31).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 1, 31).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 4, 30).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 7, 31).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -117,12 +117,12 @@ namespace RecurrenceCalculator.Tests
             var recurrence = CreateMonthlyRecurrence();
             recurrence.Occurrences = 0;
             recurrence.EndDate = new DateTime(2014, 11, 11);
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(4, occurrences.Count, "Should create 4 occurrences");
-            Assert.AreEqual(new DateTime(2014, 1, 31).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 4, 30).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 7, 31).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
-            Assert.AreEqual(new DateTime(2014, 10, 31).Add(startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
+            Assert.AreEqual(new DateTime(2014, 1, 31).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 4, 30).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 7, 31).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 10, 31).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");
         }
 
         [TestMethod]
@@ -130,11 +130,11 @@ namespace RecurrenceCalculator.Tests
         {
             var recurrence = CreateMonthNthRecurrence();
             recurrence.Instance = 3;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 3, 18).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 5, 20).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 7, 15).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 18).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 5, 20).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 7, 15).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -142,11 +142,11 @@ namespace RecurrenceCalculator.Tests
         {
             var recurrence = CreateMonthNthRecurrence();
             recurrence.Instance = 5;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 3, 25).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 5, 27).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 7, 29).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 25).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 5, 27).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 7, 29).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -157,11 +157,11 @@ namespace RecurrenceCalculator.Tests
             recurrence.Sunday = true;
             recurrence.Saturday = true;
             recurrence.Instance = 5;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 3, 30).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 5, 31).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 7, 27).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 30).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 5, 31).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 7, 27).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -173,11 +173,11 @@ namespace RecurrenceCalculator.Tests
             recurrence.Thursday = true;
             recurrence.Friday = true;
             recurrence.Instance = 5;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 1, 31).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2014, 3, 31).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2014, 5, 30).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 1, 31).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2014, 3, 31).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2014, 5, 30).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -186,11 +186,11 @@ namespace RecurrenceCalculator.Tests
             var recurrence = CreateYearlyRecurrence();
             recurrence.Occurrences = 0;
             recurrence.EndDate = new DateTime(2020, 11, 11);
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 2, 28).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2017, 2, 28).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2020, 2, 29).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 28).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2017, 2, 28).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2020, 2, 29).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -198,11 +198,11 @@ namespace RecurrenceCalculator.Tests
         {
             var recurrence = CreateYearlyRecurrence();
             recurrence.Occurrences = 3;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 2, 28).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2017, 2, 28).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2020, 2, 29).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 28).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2017, 2, 28).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2020, 2, 29).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
         [TestMethod]
@@ -210,11 +210,11 @@ namespace RecurrenceCalculator.Tests
         {
             var recurrence = CreateYearNthRecurrence();
             recurrence.Occurrences = 3;
-            var occurrences = calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
-            Assert.AreEqual(new DateTime(2014, 2, 18).Add(startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
-            Assert.AreEqual(new DateTime(2017, 2, 21).Add(startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
-            Assert.AreEqual(new DateTime(2020, 2, 18).Add(startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
+            Assert.AreEqual(new DateTime(2014, 2, 18).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2017, 2, 21).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2020, 2, 18).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
         private AppointmentRecurrence CreateWeeklyRecurrence()
         {
@@ -229,7 +229,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = true,
                 Friday = false,
                 Saturday = false,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 5
             };
         }
@@ -248,7 +248,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = false,
                 Friday = false,
                 Saturday = false,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 3
             };
         }
@@ -267,7 +267,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = false,
                 Friday = false,
                 Saturday = false,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 3
             };
         }
@@ -287,7 +287,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = false,
                 Friday = false,
                 Saturday = false,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 3
             };
         }
@@ -307,7 +307,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = false,
                 Friday = false,
                 Saturday = false,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 3
             };
         }
@@ -335,7 +335,7 @@ namespace RecurrenceCalculator.Tests
                 Thursday = true,
                 Friday = true,
                 Saturday = true,
-                StartDate = startDate,
+                StartDate = _startDate,
                 Occurrences = 10
             };
         }
