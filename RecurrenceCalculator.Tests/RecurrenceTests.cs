@@ -194,6 +194,32 @@ namespace RecurrenceCalculator.Tests
         }
 
         [TestMethod]
+        public void Should_Generate_Yearly_Recurrences_With_End_Date_Same_Start_Date()
+        {
+            var recurrence = new AppointmentRecurrence
+            {
+                RecurrenceType = RecurrenceType.Yearly,
+                Interval = 1,
+                DayOfMonth = 31,
+                MonthOfYear = 12,
+                Sunday = true,
+                Monday = true,
+                Tuesday = true,
+                Wednesday = true,
+                Thursday = true,
+                Friday = true,
+                Saturday = true,
+                StartDate = new DateTime(2019, 12, 31, 16, 0, 0),
+                Occurrences = 3
+            };
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
+            Assert.AreEqual(3, occurrences.Count, "Should create 3 occurrences");
+            Assert.AreEqual(new DateTime(2019, 12, 31, 16, 0, 0), occurrences[0], "Date 1 should be correct");
+            Assert.AreEqual(new DateTime(2020, 12, 31, 16, 0, 0), occurrences[1], "Date 2 should be correct");
+            Assert.AreEqual(new DateTime(2021, 12, 31, 16, 0, 0), occurrences[2], "Date 3 should be correct");
+        }
+
+        [TestMethod]
         public void Should_Generate_Yearly_Recurrences_Without_End_Date()
         {
             var recurrence = CreateYearlyRecurrence();
