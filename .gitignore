@@ -160,3 +160,4 @@ $RECYCLE.BIN/
 /Source/Zeus/Zeus.Web/app/**/*.map
 /Source/Zeus/Zeus.Web/app/**/*.js
 *.xml
+RecurrenceCalculator/.vs/

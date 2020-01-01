@@ -167,7 +167,7 @@ namespace RecurrenceCalculator
             var lastDayOfMonth = DateTime.DaysInMonth(recurrence.StartDate.Year, recurrence.MonthOfYear);
             var date = new DateTime(recurrence.StartDate.Year, recurrence.MonthOfYear,
                 lastDayOfMonth > recurrence.DayOfMonth ? recurrence.DayOfMonth : lastDayOfMonth);
-            if (date < recurrence.StartDate)
+            if (date < recurrence.StartDate.Date)
             {
                 lastDayOfMonth = DateTime.DaysInMonth(recurrence.StartDate.Year + recurrence.Interval, recurrence.MonthOfYear);
                 date = new DateTime(recurrence.StartDate.Year + recurrence.Interval, recurrence.MonthOfYear,
