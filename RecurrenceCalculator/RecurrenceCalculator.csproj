@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <PackageId>RecurrenceCalculator</PackageId>
     <Authors>Sergey Barskiy</Authors>
     <Description>Performs Outlook style recurrence calculations
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>Fix issue with yearly recurrence skipping first one if start date has time in it.
 License: https://github.com/SergeyBarskiy/RecurrenceCalculator/blob/master/LICENSE</PackageReleaseNotes>
     <Copyright>@SergeyBarskiy</Copyright>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>Outlook,recurrence</PackageTags>
   </PropertyGroup>
 

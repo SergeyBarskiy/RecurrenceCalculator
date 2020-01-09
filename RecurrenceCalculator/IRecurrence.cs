@@ -61,13 +61,6 @@ namespace RecurrenceCalculator
         /// </summary>
         /// <value>The of the occurrence, such as 1st or 2nd.  Set to 5 for the last instance.</value>
         int Instance { get; }
-
-        /// <summary>
-        /// Gets the day of the month.
-        /// </summary>
-        /// <value>The day.</value>
-        int Day { get; }
-
         /// <summary>
         /// Gets the interval, such as every 2 days or every 3 years.
         /// </summary>
