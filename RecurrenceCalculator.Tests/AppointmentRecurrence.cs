@@ -14,7 +14,6 @@ namespace RecurrenceCalculator.Tests
         public bool Friday { get; set; }
         public bool Saturday { get; set; }
         public int Instance { get; set; }
-        public int Day { get; set; }
         public int Interval { get; set; }
         public int MonthOfYear { get; set; }
         public int Occurrences { get; set; }
