@@ -1,25 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageId>RecurrenceCalculator</PackageId>
     <Authors>Sergey Barskiy</Authors>
-    <Description>Performs Outlook style recurrence calculations
-</Description>
+    <Description>Performs Outlook style recurrence calculations</Description>
     <PackageProjectUrl>https://github.com/SergeyBarskiy/RecurrenceCalculator/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SergeyBarskiy/RecurrenceCalculator/</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>Fix issue with yearly recurrence skipping first one if start date has time in it.
-License: https://github.com/SergeyBarskiy/RecurrenceCalculator/blob/master/LICENSE</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .net 6, but still support netstandard 2.0</PackageReleaseNotes>
     <Copyright>@SergeyBarskiy</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>Outlook,recurrence</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
