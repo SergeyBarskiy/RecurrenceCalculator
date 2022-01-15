@@ -9,7 +9,7 @@ jobs:
   build:
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'RecurrenceCalculator/RecurrenceCalculator.sln'
+      SOLUTION: 'RecurrenceCalculator.sln'
     
     runs-on: ubuntu-latest
 
