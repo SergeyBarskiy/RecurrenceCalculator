@@ -1,8 +1,10 @@
-name: BuildANDpUBLISH
+name: BuildAndPublish
 
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '.github/**'
   workflow_dispatch:
 
 jobs:
