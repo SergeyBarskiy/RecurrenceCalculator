@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ master, feature* ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    env:
+      BUILD_CONFIG: 'Release'
+      SOLUTION: 'RecurrenceCalculator/RecurrenceCalculator.sln'
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+
+      - name: Restore dependencies
+        working-directory: ./RecurrenceCalculator
+        run: nuget restore $SOLUTION
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.*
+
+      - name: Build
+        working-directory: ./RecurrenceCalculator
+        run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
+
+      - name: Run tests
+        working-directory: ./RecurrenceCalculator
+        run: dotnet test $SOLUTION /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
