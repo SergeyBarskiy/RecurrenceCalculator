@@ -99,6 +99,32 @@ namespace RecurrenceCalculator.Tests
             Assert.AreEqual(new DateTime(2014, 3, 11).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");
         }
 
+        [TestMethod]
+        public void Should_Generate_Weekly_Recurrences__FirstDayOfWeek_Monday_FirstOccurrence_Is_At_First_Occurrence()
+        {
+            var recurrence = CreateWeeklyRecurrence(3, true, false, false, false, false, false, false);
+            _calendarUtility.FirstDayOfWeek = DayOfWeek.Monday;
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
+            Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
+            Assert.AreEqual(new DateTime(2014, 02, 02).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 02, 23).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 03, 16).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 04, 06).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 04, 27).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");                        
+        }
+
+        [TestMethod]
+        public void Should_Generate_Weekly_Recurrences__FirstDayOfWeek_Sunday_FirstOccurrence_Is_At_First_Interval()
+        {
+            var recurrence = CreateWeeklyRecurrence(3, true, false, false, false, false, false, false);
+            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
+            Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
+            Assert.AreEqual(new DateTime(2014, 02, 16).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 03, 09).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 03, 30).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 04, 20).Add(_startDate.TimeOfDay), occurrences[3], "Date 4 should be correct");                        
+            Assert.AreEqual(new DateTime(2014, 05, 11).Add(_startDate.TimeOfDay), occurrences[4], "Date 5 should be correct");                        
+        }
 
         [TestMethod]
         public void Should_Generate_Monthly_Recurrences_Without_End_Date()
@@ -242,19 +268,21 @@ namespace RecurrenceCalculator.Tests
             Assert.AreEqual(new DateTime(2017, 2, 21).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
             Assert.AreEqual(new DateTime(2020, 2, 18).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
-        private AppointmentRecurrence CreateWeeklyRecurrence()
+
+        private AppointmentRecurrence CreateWeeklyRecurrence(int interval = 2, bool sunday = false, bool monday = false, 
+            bool tuesday = true, bool wednesday =  false, bool thursday = true, bool friday = false, bool saturday = false)
         {
             return new AppointmentRecurrence
             {
                 RecurrenceType = RecurrenceType.Weekly,
-                Interval = 2,
-                Sunday = false,
-                Monday = false,
-                Tuesday = true,
-                Wednesday = false,
-                Thursday = true,
-                Friday = false,
-                Saturday = false,
+                Interval = interval,
+                Sunday = sunday,
+                Monday = monday,
+                Tuesday = tuesday,
+                Wednesday = wednesday,
+                Thursday = thursday,
+                Friday = friday,
+                Saturday = saturday,
                 StartDate = _startDate,
                 Occurrences = 5
             };

@@ -11,6 +11,12 @@ namespace RecurrenceCalculator
     public class Calculator
     {
         /// <summary>
+        /// Configurable first day of the week as different cultures can use Monday or Sunday.
+        /// Defaulted to Sunday but can be overridden by setting the property at runtime
+        /// </summary>
+        public DayOfWeek FirstDayOfWeek { get; set; } = DayOfWeek.Sunday;
+
+        /// <summary>
         /// Calculates the occurrences.
         /// </summary>
         /// <param name="recurrence">The recurrence pattern.</param>
@@ -77,8 +83,8 @@ namespace RecurrenceCalculator
         private IEnumerable<DateTime> GetWeeklyRecurrenceOccurrences(IRecurrence recurrence)
         {
             DateTime date = recurrence.StartDate.Date;
-            // find sunday before - start of first week
-            while (date.DayOfWeek != DayOfWeek.Sunday)
+            // find first day of the week - start of first week
+            while (date.DayOfWeek != FirstDayOfWeek)
             {
                 date = date.AddDays(-1);
             }
