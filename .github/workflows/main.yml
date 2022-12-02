@@ -36,4 +36,4 @@ jobs:
 
       - name: Run tests
         working-directory: ./RecurrenceCalculator
-        run: dotnet test $SOLUTION /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+        run: dotnet test $SOLUTION --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
