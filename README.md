@@ -9,6 +9,7 @@ I made one change - I changed the DayOfWeekMask from flags based enumeration to 
 It is very easy to use.  Implement IRecurrence in any of your class, create an instance of the calculator, and call Calculate method.  An exception will be thrown if your pattern is invalid.  You can also call Validate manually.  If you get an empty string, you are valid.  Otherwise you will get the message telling you what is wrong with your pattern.
 
 The project includes tests that will tell you how to use the calculator.
+There is now support for default recurrence class and recurrence fluent API builder
 
 <pre><code class='language-cs'>
 

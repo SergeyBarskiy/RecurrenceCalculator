@@ -10,7 +10,9 @@
     <PackageProjectUrl>https://github.com/SergeyBarskiy/RecurrenceCalculator/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SergeyBarskiy/RecurrenceCalculator/</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>Update to .net 6, but still support netstandard 2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Version 1 Update to .net 6, but still support netstandard 2.0
+Version 2 Adds support for different starting day of the week
+Version 3 adds support for .net 7, default recurrance class and recurrence bulder with fluent API</PackageReleaseNotes>
     <Copyright>@SergeyBarskiy</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>Outlook,recurrence</PackageTags>
