@@ -18,15 +18,17 @@ jobs:
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
+        with: 
+          nuget-version: latest
 
       - name: Restore dependencies
         working-directory: ./RecurrenceCalculator
         run: nuget restore $SOLUTION
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.*
+          dotnet-version: 7.0.*
 
       - name: Build
         working-directory: ./RecurrenceCalculator
@@ -34,4 +36,4 @@ jobs:
 
       - name: Run tests
         working-directory: ./RecurrenceCalculator
-        run: dotnet test $SOLUTION /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+        run: dotnet test $SOLUTION --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
