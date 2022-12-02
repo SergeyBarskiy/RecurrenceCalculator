@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -100,11 +101,24 @@ namespace RecurrenceCalculator.Tests
         }
 
         [TestMethod]
-        public void Should_Generate_Weekly_Recurrences__FirstDayOfWeek_Monday_FirstOccurrence_Is_At_First_Occurrence()
+        public void Should_Generate_Weekly_Recurrences_FirstDayOfWeek_Monday_FirstOccurrence_Is_At_First_Occurrence()
         {
-            var recurrence = CreateWeeklyRecurrence(3, true, false, false, false, false, false, false);
-            _calendarUtility.FirstDayOfWeek = DayOfWeek.Monday;
-            var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
+            var recurrence = new AppointmentRecurrence
+            {
+                RecurrenceType = RecurrenceType.Weekly,
+                Interval = 3,
+                Sunday = true,
+                Monday = false,
+                Tuesday = false,
+                Wednesday = false,
+                Thursday = false,
+                Friday = false,
+                Saturday = false,
+                StartDate = _startDate,
+                Occurrences = 5
+            };
+            var specificCalendar = new Calculator(DayOfWeek.Monday);
+            var occurrences = specificCalendar.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
             Assert.AreEqual(new DateTime(2014, 02, 02).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");                        
             Assert.AreEqual(new DateTime(2014, 02, 23).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");                        
@@ -114,9 +128,22 @@ namespace RecurrenceCalculator.Tests
         }
 
         [TestMethod]
-        public void Should_Generate_Weekly_Recurrences__FirstDayOfWeek_Sunday_FirstOccurrence_Is_At_First_Interval()
+        public void Should_Generate_Weekly_Recurrences_FirstDayOfWeek_Sunday_FirstOccurrence_Is_At_First_Interval()
         {
-            var recurrence = CreateWeeklyRecurrence(3, true, false, false, false, false, false, false);
+            var recurrence = new AppointmentRecurrence
+            {
+                RecurrenceType = RecurrenceType.Weekly,
+                Interval = 3,
+                Sunday = true,
+                Monday = false,
+                Tuesday = false,
+                Wednesday = false,
+                Thursday = false,
+                Friday = false,
+                Saturday = false,
+                StartDate = _startDate,
+                Occurrences = 5
+            };
             var occurrences = _calendarUtility.CalculateOccurrences(recurrence).ToList();
             Assert.AreEqual(5, occurrences.Count, "Should create 5 occurrences");
             Assert.AreEqual(new DateTime(2014, 02, 16).Add(_startDate.TimeOfDay), occurrences[0], "Date 1 should be correct");                        
@@ -269,20 +296,19 @@ namespace RecurrenceCalculator.Tests
             Assert.AreEqual(new DateTime(2020, 2, 18).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
 
-        private AppointmentRecurrence CreateWeeklyRecurrence(int interval = 2, bool sunday = false, bool monday = false, 
-            bool tuesday = true, bool wednesday =  false, bool thursday = true, bool friday = false, bool saturday = false)
+        private AppointmentRecurrence CreateWeeklyRecurrence()
         {
             return new AppointmentRecurrence
             {
                 RecurrenceType = RecurrenceType.Weekly,
-                Interval = interval,
-                Sunday = sunday,
-                Monday = monday,
-                Tuesday = tuesday,
-                Wednesday = wednesday,
-                Thursday = thursday,
-                Friday = friday,
-                Saturday = saturday,
+                Interval = 2,
+                Sunday = false,
+                Monday = false,
+                Tuesday = true,
+                Wednesday = false,
+                Thursday = true,
+                Friday = false,
+                Saturday = false,
                 StartDate = _startDate,
                 Occurrences = 5
             };

@@ -11,10 +11,26 @@ namespace RecurrenceCalculator
     public class Calculator
     {
         /// <summary>
+        /// New instance of <see cref="Calculator"/>
+        /// First day of week will be set to Sunday
+        /// </summary>
+        public Calculator() : this(DayOfWeek.Sunday) { }
+
+        /// <summary>
+        /// New instance of <see cref="Calculator"/>
+        /// First day of week will be set to Sunday
+        /// </summary>
+        /// <param name="firstDayOfWeek">First day of the week</param>
+        public Calculator(DayOfWeek firstDayOfWeek)
+        {
+            FirstDayOfWeek = firstDayOfWeek;
+        }
+
+        /// <summary>
         /// Configurable first day of the week as different cultures can use Monday or Sunday.
         /// Defaulted to Sunday but can be overridden by setting the property at runtime
         /// </summary>
-        public DayOfWeek FirstDayOfWeek { get; set; } = DayOfWeek.Sunday;
+        public DayOfWeek FirstDayOfWeek { get; private set; } = DayOfWeek.Sunday;
 
         /// <summary>
         /// Calculates the occurrences.
