@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <PackageId>RecurrenceCalculator</PackageId>
     <Authors>Sergey Barskiy</Authors>
     <Description>Performs Outlook style recurrence calculations</Description>
