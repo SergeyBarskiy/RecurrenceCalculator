@@ -21,14 +21,14 @@ jobs:
         with: 
           nuget-version: latest
 
-      - name: Restore dependencies
-        working-directory: ./RecurrenceCalculator
-        run: nuget restore $SOLUTION
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.*
+
+      - name: Restore dependencies
+        working-directory: ./RecurrenceCalculator
+        run: dotnet restore $SOLUTION
 
       - name: Build
         working-directory: ./RecurrenceCalculator
