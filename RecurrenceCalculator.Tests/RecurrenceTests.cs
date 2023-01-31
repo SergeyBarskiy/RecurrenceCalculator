@@ -295,6 +295,23 @@ namespace RecurrenceCalculator.Tests
             Assert.AreEqual(new DateTime(2017, 2, 21).Add(_startDate.TimeOfDay), occurrences[1], "Date 2 should be correct");
             Assert.AreEqual(new DateTime(2020, 2, 18).Add(_startDate.TimeOfDay), occurrences[2], "Date 3 should be correct");
         }
+        
+        [TestMethod]
+        public void MonthlyRecurrence_Issue_FailingTest()
+        {
+            var recurrence = new AppointmentRecurrence
+            {
+                RecurrenceType = RecurrenceType.Monthly,
+                Interval = 1,
+                DayOfMonth = 18,
+                StartDate = new DateTime(2023, 01, 31),
+                Occurrences = 1
+            };
+            var specificCalendar = new Calculator(DayOfWeek.Monday);
+            var occurrences = specificCalendar.CalculateOccurrences(recurrence).ToList();
+            Assert.AreEqual(1, occurrences.Count, "Should create 1 occurrence");
+            Assert.AreEqual(new DateTime(2023, 02, 18), occurrences[0], "Date 1 should be correct");                                    
+        }
 
         private AppointmentRecurrence CreateWeeklyRecurrence()
         {
