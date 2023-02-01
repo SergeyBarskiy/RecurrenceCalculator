@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <PackageId>RecurrenceCalculator</PackageId>
     <Authors>Sergey Barskiy</Authors>
     <Description>Performs Outlook style recurrence calculations</Description>
@@ -12,7 +12,8 @@
     <RepositoryType>GIT</RepositoryType>
     <PackageReleaseNotes>Version 1 Update to .net 6, but still support netstandard 2.0
 Version 2 Adds support for different starting day of the week
-Version 3 adds support for .net 7, default recurrance class and recurrence bulder with fluent API</PackageReleaseNotes>
+Version 3 adds support for .net 7, default recurrance class and recurrence bulder with fluent API
+Version 3.0.1 fix issue with monthly recurance when start date is greater than day scheduled</PackageReleaseNotes>
     <Copyright>@SergeyBarskiy</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>Outlook,recurrence</PackageTags>

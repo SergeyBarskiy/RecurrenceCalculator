@@ -138,7 +138,8 @@ namespace RecurrenceCalculator
             DateTime date = recurrence.StartDate.Date;
             if (date.Day > recurrence.DayOfMonth)
             {
-                date = date.AddMonths(recurrence.Interval).AddDays(-1 * (date.Day - 1));
+                date = date.AddMonths(recurrence.Interval);
+                date = date.AddDays(-1 * (date.Day - 1));
             }
 
             int occurenceCounter = 0;
