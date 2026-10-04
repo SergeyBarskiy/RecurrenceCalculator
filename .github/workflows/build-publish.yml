@@ -14,7 +14,11 @@ jobs:
       SOLUTION: 'RecurrenceCalculator.sln'
     
     runs-on: ubuntu-latest
-
+    
+    permissions:
+      id-token: write
+      contents: read
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -22,11 +26,6 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
         with: 
           nuget-version: latest
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.0.*
 
       - name: Restore dependencies
         working-directory: ./RecurrenceCalculator
@@ -39,7 +38,13 @@ jobs:
       - name: Run tests
         working-directory: ./RecurrenceCalculator
         run: dotnet test $SOLUTION --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
-        
+
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+          
       - name: Push to nuget
         working-directory: ./RecurrenceCalculator
-        run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}        
+        run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{steps.login.outputs.NUGET_API_KEY}}       
